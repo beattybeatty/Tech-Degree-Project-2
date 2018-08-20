@@ -7,8 +7,13 @@
 //
 
 /*
- - The starter files contain a Storyboard scene that is simulated to a 4.7 inch iPhone without any constraints to position elements. If you run the app in the simulator for a 5.5 inch iPhone, the layout looks fine but it breaks on any other device size. Convert the Storyboard back to a universal scene and add constraints to maintain the layout such all UI elements are sized and spaced appropriately for all iPhones of screen sizes 4.7 and 5.5. inches.
+ CHECK - The starter files contain a Storyboard scene that is simulated to a 4.7 inch iPhone without any constraints to position elements. If you run the app in the simulator for a 5.5 inch iPhone, the layout looks fine but it breaks on any other device size. Convert the Storyboard back to a universal scene and add constraints to maintain the layout such all UI elements are sized and spaced appropriately for all iPhones of screen sizes 4.7 and 5.5. inches.
  - Refactor the existing code such that individual questions are modeled using a class or struct
+    * will need to be created in new file called something like "question provider".
+        CHECK * There you will need to import gamekit and foundation.
+        CHECK * will need to make struct for question object and question bank.
+        * will need to make function for question to display, answers to display, and correct answer display
+        * will need to change references from trivia to new struct
  - Ensure that code adheres to the MVC pattern. Please place your new custom data structure for questions in a new Swift file.
  - Enhance the quiz so it can accommodate four answer choices for each question, as shown in the mockups and sample question set.
  - Add functionality such that during each game, questions are chosen at random, though no question will be repeated within a single game.
@@ -32,12 +37,17 @@ class ViewController: UIViewController {
     
     var gameSound: SystemSoundID = 0
     
+    /*
+     
+     commenting out code moved to questionprovider
+     
     let trivia: [[String : String]] = [
         ["Question": "Only female koalas can whistle", "Answer": "False"],
         ["Question": "Blue whales are technically whales", "Answer": "True"],
         ["Question": "Camels are cannibalistic", "Answer": "False"],
         ["Question": "All ducks are birds", "Answer": "True"]
     ]
+ */
     
     @IBOutlet weak var questionField: UILabel!
     @IBOutlet weak var trueButton: UIButton!
@@ -58,13 +68,20 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
+    /*
+ 
+    commenting out - copied to questionprovider
+ 
     func displayQuestion() {
         indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextInt(upperBound: trivia.count)
         let questionDictionary = trivia[indexOfSelectedQuestion]
         questionField.text = questionDictionary["Question"]
         playAgainButton.isHidden = true
     }
-    
+ 
+ */
+ 
     func displayScore() {
         // Hide the answer buttons
         trueButton.isHidden = true
