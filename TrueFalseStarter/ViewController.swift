@@ -14,8 +14,8 @@
         CHECK * will need to make struct for question object and question bank.
         * will need to make function for question to display, answers to display, and correct answer display
         * will need to change references from trivia to new struct
- - Ensure that code adheres to the MVC pattern. Please place your new custom data structure for questions in a new Swift file.
- - Enhance the quiz so it can accommodate four answer choices for each question, as shown in the mockups and sample question set.
+ CHECK - Ensure that code adheres to the MVC pattern. Please place your new custom data structure for questions in a new Swift file.
+ CHECK - Enhance the quiz so it can accommodate four answer choices for each question, as shown in the mockups and sample question set.
  - Add functionality such that during each game, questions are chosen at random, though no question will be repeated within a single game.
  
  - Implement a feature so that the app can neatly display a mix of 3-option questions as well as 4-option questions. Inactive buttons should be spaced or resized appropriately, not simply hidden, disabled, or marked as unused (e.g. with the string ‘N/A’). You need to implement this feature using only one view controller.
@@ -37,17 +37,6 @@ class ViewController: UIViewController {
     
     var gameSound: SystemSoundID = 0
     
-    /*
-     
-     commenting out code moved to questionprovider
-     
-    let trivia: [[String : String]] = [
-        ["Question": "Only female koalas can whistle", "Answer": "False"],
-        ["Question": "Blue whales are technically whales", "Answer": "True"],
-        ["Question": "Camels are cannibalistic", "Answer": "False"],
-        ["Question": "All ducks are birds", "Answer": "True"]
-    ]
- */
     
     @IBOutlet weak var questionField: UILabel!
     @IBOutlet weak var trueButton: UIButton!
@@ -68,10 +57,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    
-    /*
- 
-    commenting out - copied to questionprovider
+/* commenting out, writing new func below
  
     func displayQuestion() {
         indexOfSelectedQuestion = GKRandomSource.sharedRandom().nextInt(upperBound: trivia.count)
@@ -80,7 +66,15 @@ class ViewController: UIViewController {
         playAgainButton.isHidden = true
     }
  
- */
+*/
+    
+// from sumon0002016
+    func displayQuestion() {
+        indexOfSelectedQuestion = questionsBank.randomNumber()
+        let question = questionToDisplay(from: indexOfSelectedQuestion)
+        questionField.text = question
+        playAgainButton.isHidden = true
+    }
  
     func displayScore() {
         // Hide the answer buttons
@@ -98,7 +92,7 @@ class ViewController: UIViewController {
         // Increment the questions asked counter
         questionsAsked += 1
         
-        let selectedQuestionDict = trivia[indexOfSelectedQuestion]
+        let selectedQuestionDict = QuestionsBank[QuestionsObject]
         let correctAnswer = selectedQuestionDict["Answer"]
         
         if (sender === trueButton &&  correctAnswer == "True") || (sender === falseButton && correctAnswer == "False") {
