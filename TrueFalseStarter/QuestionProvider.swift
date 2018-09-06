@@ -30,11 +30,39 @@ struct QuestionsBank {
         QuestionsObject(question: "Which of these countries won the most medals in the 2012 Summer Games?", answers: ["France", "Germany", "Japan", "Great Britan"], correctAnswer: 4)
     ]
     
+    /*
     func randomFact() -> String {
         let randomNumber = GKRandomSource.sharedRandom().nextInt(upperBound: questions.count)
         return questions[randomNumber]
     }
-
+     */
+    
+    func randomNumber() -> Int {
+        let randomFactIndex = GKRandomSource.sharedRandom().nextInt(upperBound: questions.count) - 1
+        // let randomFactIndex = randomNumber - 1
+        return randomFactIndex
+    }
+    
+    func provideRF(from randomFactIndex: Int) -> String {
+        let randomFact = questions[randomFactIndex]
+        return randomFact.question
+    }
+    
+    func provideRFAnswers(from randomFactIndex: Int) -> [String] {
+        let randomFact = questions[randomFactIndex]
+        return randomFact.answers
+    }
+    
+    func provideCorrectAnswer(from randomFactIndex: Int) -> String {
+        let randomFact = questions[randomFactIndex]
+        // store index value of correct answer from the answers array
+        let correctAnswerIndex = questions[correctAnswer] - 1
+        // store the string value of the correct answer from the answers array
+        let correctAnswer = questions.answers[correctAnswerIndex]
+        return correctAnswer
+    }
 }
+
+
 
 
