@@ -10,10 +10,11 @@ import Foundation
 import GameKit
 
 struct QuestionsObject {
-    var question: String
-    var answers: [String]
-    var correctAnswer: Int
-}
+    var question: String = ""
+    var answers: [String] = [""]
+    var correctAnswer: Int = 0
+    
+    }
 
 // Can you have 'correctAnswer' pull index from answer, rather than me retyping a string of what the answer should be?
 struct QuestionsBank {
@@ -37,30 +38,33 @@ struct QuestionsBank {
     }
      */
     
+    // create a random number in order to store a random fact index
     func randomNumber() -> Int {
         let randomFactIndex = GKRandomSource.sharedRandom().nextInt(upperBound: questions.count) - 1
         // let randomFactIndex = randomNumber - 1
         return randomFactIndex
     }
     
+    // provides a random fact based off the random fact index generated
     func provideRF(from randomFactIndex: Int) -> String {
         let randomFact = questions[randomFactIndex]
         return randomFact.question
     }
     
+    // provides answers for the random fact provided
     func provideRFAnswers(from randomFactIndex: Int) -> [String] {
         let randomFact = questions[randomFactIndex]
         return randomFact.answers
     }
     
-    func provideCorrectAnswer(from randomFactIndex: Int) -> String {
+    // provides correct answer index and pulls correct answer
+    func provideCAOIndex(from randomFactIndex: Int) -> String {
         let randomFact = questions[randomFactIndex]
-        // store index value of correct answer from the answers array
-        let correctAnswerIndex = questions[correctAnswer] - 1
-        // store the string value of the correct answer from the answers array
-        let correctAnswer = questions.answers[correctAnswerIndex]
-        return correctAnswer
+        let correctAnswerIndex = randomFact.correctAnswer
+        let correctAnswerString = randomFact.answers[correctAnswerIndex]
+        return correctAnswerString
     }
+    
 }
 
 
