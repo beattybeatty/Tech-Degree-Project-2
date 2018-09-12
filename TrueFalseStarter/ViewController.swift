@@ -12,7 +12,7 @@
     * will need to be created in new file called something like "question provider".
         CHECK * There you will need to import gamekit and foundation.
         CHECK * will need to make struct for question object and question bank.
-        * will need to make function for question to display, answers to display, and correct answer display
+        CHECK * will need to make function for question to display, answers to display, and correct answer display
         * will need to change references from trivia to new struct
  CHECK - Ensure that code adheres to the MVC pattern. Please place your new custom data structure for questions in a new Swift file.
  CHECK - Enhance the quiz so it can accommodate four answer choices for each question, as shown in the mockups and sample question set.
@@ -34,6 +34,7 @@ class ViewController: UIViewController {
     var questionsAsked = 0
     var correctQuestions = 0
     var indexOfSelectedQuestion: Int = 0
+    var questionsBank = QuestionsBank()
     
     var gameSound: SystemSoundID = 0
     
@@ -71,7 +72,7 @@ class ViewController: UIViewController {
 // from sumon0002016
     func displayQuestion() {
         indexOfSelectedQuestion = questionsBank.randomNumber()
-        let question = questionToDisplay(from: indexOfSelectedQuestion)
+        let question = questionsBank.questionToDisplay(from: indexOfSelectedQuestion)
         questionField.text = question
         playAgainButton.isHidden = true
     }
@@ -92,7 +93,7 @@ class ViewController: UIViewController {
         // Increment the questions asked counter
         questionsAsked += 1
         
-        let selectedQuestionDict = QuestionsBank[QuestionsObject]
+        let selectedQuestionDict = QuestionsBank[question]
         let correctAnswer = selectedQuestionDict["Answer"]
         
         if (sender === trueButton &&  correctAnswer == "True") || (sender === falseButton && correctAnswer == "False") {

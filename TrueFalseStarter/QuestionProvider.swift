@@ -13,7 +13,6 @@ struct QuestionsObject {
     var question: String = ""
     var answers: [String] = [""]
     var correctAnswer: Int = 0
-    
     }
 
 // Can you have 'correctAnswer' pull index from answer, rather than me retyping a string of what the answer should be?
@@ -64,6 +63,8 @@ struct QuestionsBank {
         let correctAnswerString = randomFact.answers[correctAnswerIndex]
         return correctAnswerString
     }
+    
+    // may need function to check and see if questions have been asked. could store array of ints so all we need to check is if the randomfactindex is already on the array
     
 }
 
