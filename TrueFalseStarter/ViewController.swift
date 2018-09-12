@@ -13,7 +13,7 @@
         CHECK * There you will need to import gamekit and foundation.
         CHECK * will need to make struct for question object and question bank.
         CHECK * will need to make function for question to display, answers to display, and correct answer display
-        * will need to change references from trivia to new struct
+        CHECK * will need to change references from trivia to new struct
  CHECK - Ensure that code adheres to the MVC pattern. Please place your new custom data structure for questions in a new Swift file.
  CHECK - Enhance the quiz so it can accommodate four answer choices for each question, as shown in the mockups and sample question set.
  - Add functionality such that during each game, questions are chosen at random, though no question will be repeated within a single game.
