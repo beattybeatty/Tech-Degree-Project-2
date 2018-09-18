@@ -34,15 +34,19 @@ class ViewController: UIViewController {
     var questionsAsked = 0
     var correctQuestions = 0
     var indexOfSelectedQuestion: Int = 0
+    var correctAnswerIndex = 0
     var questionsBank = QuestionsBank()
+    var correctAnswer = ""
     
     var gameSound: SystemSoundID = 0
     
     
     @IBOutlet weak var questionField: UILabel!
-    @IBOutlet weak var trueButton: UIButton!
-    @IBOutlet weak var falseButton: UIButton!
     @IBOutlet weak var playAgainButton: UIButton!
+    @IBOutlet weak var answerButton01: UIButton!
+    @IBOutlet weak var answerButton02: UIButton!
+    @IBOutlet weak var answerButton03: UIButton!
+    @IBOutlet weak var answerButton04: UIButton!
     
 
     override func viewDidLoad() {
@@ -51,6 +55,7 @@ class ViewController: UIViewController {
         // Start game
         playGameStartSound()
         displayQuestion()
+        displayAnswers()
     }
 
     override func didReceiveMemoryWarning() {
@@ -75,28 +80,50 @@ class ViewController: UIViewController {
         let question = questionsBank.questionToDisplay(from: indexOfSelectedQuestion)
         questionField.text = question
         playAgainButton.isHidden = true
+        
+       // showAnswers()
     }
  
+    func displayAnswers() {
+        let answer = questionsBank.answersToDisplay(from: indexOfSelectedQuestion)
+        if answer.count == 4 {
+            answerButton01.setTitle(answer[0], for: .normal)
+            answerButton02.setTitle(answer[1], for: .normal)
+            answerButton03.setTitle(answer[2], for: .normal)
+            answerButton04.setTitle(answer[3], for: .normal)
+        }
+    }
+    
     func displayScore() {
         // Hide the answer buttons
-        trueButton.isHidden = true
-        falseButton.isHidden = true
+        answerButton01.isHidden = true
+        answerButton02.isHidden = true
+        answerButton03.isHidden = true
+        answerButton04.isHidden = true
+        
         
         // Display play again button
         playAgainButton.isHidden = false
         
+        if correctQuestions == 4 {
         questionField.text = "Way to go!\nYou got \(correctQuestions) out of \(questionsPerRound) correct!"
-        
+        } else {
+            questionsField.text = "Way to go!\nYou got\(correctQuestions) out of\(questionsPerRound) correct!"
+        }
     }
     
     @IBAction func checkAnswer(_ sender: UIButton) {
         // Increment the questions asked counter
         questionsAsked += 1
         
-        let selectedQuestionDict = QuestionsBank[question]
-        let correctAnswer = selectedQuestionDict["Answer"]
+        correctAnswer = questionsBank.correctAnswerToDisplay(from: indexOfSelectedQuestion)
         
-        if (sender === trueButton &&  correctAnswer == "True") || (sender === falseButton && correctAnswer == "False") {
+        if (sender === answerButton01 &&  answerButton01.titleLabel?.text == correctAnswer) ||
+            (sender === answerButton02 &&  answerButton02.titleLabel?.text == correctAnswer) ||
+            (sender === answerButton03 &&  answerButton03.titleLabel?.text == correctAnswer) ||
+            (sender === answerButton03 &&  answerButton03.titleLabel?.text == correctAnswer) ||
+        
+        {
             correctQuestions += 1
             questionField.text = "Correct!"
         } else {
@@ -104,6 +131,8 @@ class ViewController: UIViewController {
         }
         
         loadNextRoundWithDelay(seconds: 2)
+        usedQuestion()
+        disableWrongAns(sender)
     }
     
     func nextRound() {
@@ -118,15 +147,55 @@ class ViewController: UIViewController {
     
     @IBAction func playAgain() {
         // Show the answer buttons
-        trueButton.isHidden = false
-        falseButton.isHidden = false
+        answerButton01.isHidden = false
+        answerButton02.isHidden = false
+        answerButton03.isHidden = false
+        answerButton04.isHidden = false
         
         questionsAsked = 0
         correctQuestions = 0
         nextRound()
+        resetQuestions()
     }
     
-
+    func usedQuestions() {
+        questionsBank.questions.append(contentsOf: questionsBank.questionAlreadyAsked)
+        questionsBank.questionAlreadyAsked.removeAll()
+    }
+    
+    func resetQuestions() {
+        questionsBank.questions.append(contenctsOf: questionsBank.questionsAlreadyAsked)
+        questionsBank.questionAlreadyAsked.removeAll()
+    }
+    
+    @IBAction func disableWrongAns(_ sender: UIButton) {
+        let answerButtons = [answerButton01, answerButton02, answerButton03, answerButton04]
+        
+        for button in buttons {
+            button?.isEnabled = false
+            button?.alpha = 0.1
+        }
+        
+        for selectedButton in answerButtons {
+            if sender == selectedButton {
+                selectedButton?.alpha = 1.0
+            }
+        }
+    }
+    
+    func showAnswer() {
+        // Enable buttons
+        answerButton01.isEnabled = true
+        answerButton02.isEnabled = true
+        answerButton03.isEnabled = true
+        answerButton04.isEnabled = true
+        
+        // Makes buttons visible
+        answerButton01.alpha = 1.0
+        answerButton02.alpha = 1.0
+        answerButton03.alpha = 1.0
+        answerButton04.alpha = 1.0
+    }
     
     // MARK: Helper Methods
     
